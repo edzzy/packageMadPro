@@ -1,0 +1,11 @@
+Package: MadProDev
+Type: Package
+Title: MadPro : Outils d'analyse de MicroArray pour BIRD
+Version: 1.9
+Date: 2011-12-01
+Author: Edouard Hirchaud 
+Maintainer: Edouard Hirchaud <edouard.hirchaud@univ-nantes.fr>
+Description: Fonctions permetant la realisation de pipeline d'analyse pour microArray.
+License: GPL (>=2)
+Depends:  limma , genefilter
+Packaged: Thu Dec  1 16:12:04 2011; root
