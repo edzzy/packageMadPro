@@ -1,4 +1,4 @@
-`read_Agilent` <-
+`read_Array` <-
 function(pData,namesGenes,type="AG",pathDir=""){
 #Description : La fonction renvoie une matrice d'expression en lisant les fichiers
 			# issus de logiciel d'extraction d'image avec dans chaque colonne

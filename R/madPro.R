@@ -82,7 +82,7 @@ if(import){
 		species<-as.character(puceInfo$Species)
 		dye<-as.character(puceInfo$dye)
 
-		dataMA<-read_Agilent(pData=pData,namesGenes=as.character(row.names(infoGeneAnot)),type="AG",pathDir=dirFile)
+		dataMA<-read_Array(pData=pData,namesGenes=as.character(row.names(infoGeneAnot)),type="AG",pathDir=dirFile)
 
 		fileName<- paste(projet,"-rawdataCtrlInfo.txt",sep="")
 		fileName<-paste(dirFile,fileName,sep="/")
