@@ -1,6 +1,4 @@
-`filtrage_non_exprimes` <-
-function (mat.cdt,nbclasses,annotEch,seuil,nbval)
-{
+filtrage_non_exprimes <-function(mat.cdt,nbclasses,annotEch,seuil,nbval){
 ## Fonction de filtrage #########################
 ### Parametres de la fonction : 
 ##### 1 : matrice ordonnée dans l'ordre du clustering
@@ -19,7 +17,7 @@ function (mat.cdt,nbclasses,annotEch,seuil,nbval)
     classes.matrix=create_level_matrix(mat.cdt,classech)
     summary(classes.matrix)
   }
-  # On regarde le nombre de valeurs dépassant le seuil dans chaque classe d'échantillon, et on garde la sonde si on a la moitié des valeurs
+  # On regarde le nombre de valeurs dépassant le seuil dans chaque classe d'echantillon, et on garde la sonde si on a la moitié des valeurs
   current_filter= rep(FALSE, dim(classes.matrix[[1]])[1])
   
   n=nbval/100

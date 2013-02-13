@@ -55,3 +55,31 @@ meanFac<-apply(matFac,1,mean)
 return(meanFac)
 
 }
+getExpressionByProbeNames<-function(probe,mat,ProbeName){
+
+	newmat<-mat[which(ProbeName == probe),]
+	#for(i in 2:length(probelist)){
+
+		
+	return(newmat)
+}
+getExpressionByProbeNamesfor<-function(probe,mat,ProbeName){
+
+	indic<-which(ProbeName == probe[1])
+	newmat<-mat[indic,]
+	namesMat<-""
+
+	namesMat<-c(namesMat,rownames(mat)[indic])
+	namesMat<-namesMat[-1]		
+
+	for(i in 2:length(probe)){
+		indic<-which(ProbeName == probe[i])
+		newmatTMP<-mat[indic,]
+		
+		namesMat<-c(namesMat,rownames(mat)[indic])
+		
+		newmat<-rbind(newmat,newmatTMP)
+	}
+	rownames(newmat)<-namesMat
+	return(newmat)
+}
