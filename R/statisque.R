@@ -1,4 +1,4 @@
-CV<-function(matrice){
+CVbyRow<-function(matrice){
     if(missing(matrice)){              #test si la matrice est presente
         stop("L'argument matrice est manquant")
     }
@@ -8,7 +8,44 @@ CV<-function(matrice){
     CV<-ecartType/moyenne
     return(CV)
 }
+CVbyCol<-function(matrice){
+    if(missing(matrice)){              #test si la matrice est presente
+        stop("L'argument matrice est manquant")
+    }
+    matrice<-as.matrix(matrice)
+    ecartType<-apply(matrice,2,sd)                                                                                           
+    moyenne<-apply(matrice,2,mean)
+    CV<-ecartType/moyenne
+    return(CV)
+}
 
+CVbyID<-function(id,IDs,matrice){
+      tmpMat<-matrice[which(IDs == id),]
+     # cv<-mean(apply(tmpMat,2,var.coeff))
+      cv<-mean(apply(tmpMat,2,CVbyCol))
+      return(cv)
+																	
+ }
+																				
+
+CVmeanColbyID<-function(matrice,ID){
+	uniqueID<-unique(ID)	
+	cv<-vector()
+	nProbes<-vector()
+	for (i in 1:length(uniqueID)){
+		tmpMat<-matrice[which(ID == ID[i]),]
+		tmpcv<-mean(apply(tmpMat,2,CV2))
+		if(i == 1){
+			nProbes<-nrow(tmpMat)
+			cv<-tmpcv
+		}else{
+			cv<-c(cv,tmpcv)
+			nProbes<-c(nProbes,nrow(tmpMat))
+		}
+	}
+	cvTab<-cbind(cv,nProbes)
+	return(cvTab)
+}
 FC <-function(x){
 #Calcule le fold change entre deux valeurs
 
