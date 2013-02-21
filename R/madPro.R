@@ -646,6 +646,9 @@ if(tStat==TRUE){
 		  write.table(syntheseStat,file=paste(pathDir,"/",projet,"-",versus,"-allSynth.txt",sep=""),row.names=TRUE,col.names=NA,sep="\t",quote=FALSE)	
 					
 	  }
+	write.table(finalPV,file=paste(path,"/",projet,"-allpval.txt",sep=""),row.names=TRUE,col.names=NA,sep="\t",quote=FALSE)	
+	write.table(finalPV,file=paste(as.character(treepath$resultatGeneDiff),"/",projet,"-allpval.txt",sep=""),row.names=TRUE,col.names=NA,sep="\t",quote=FALSE)	
+	write.table(finalFC,file=paste(path,"/",projet,"-allFC.txt",sep=""),row.names=TRUE,col.names=NA,sep="\t",quote=FALSE)	
 	
 		save(projet,frameFac,m.filtered,pData,pSetup,puceInfo,treepath,pvalRaw,comparaison,infoGeneAnot,file=paste(projet,"-dataFilter.Rdata",sep=""))
 }
@@ -704,9 +707,6 @@ if(dCluster==TRUE){
 }
 if(Annotation==TRUE){
 #	tex_question(fileTexCluster,paste("rapport/graphCluster.tex",sep=""))
-	write.table(finalPV,file=paste(path,"/",projet,"-allpval.txt",sep=""),row.names=TRUE,col.names=NA,sep="\t",quote=FALSE)	
-	write.table(finalFC,file=paste(path,"/",projet,"-allFC.txt",sep=""),row.names=TRUE,col.names=NA,sep="\t",quote=FALSE)	
-	print(tabGenDiff)
 	tex_genDiff(tabGenDiff,dirName=treepath$rapport)
 	tex_genDiff(tabGenDiffRaw,dirName=treepath$rapport,file="genDiffRaw.tex")
 	if(Annotation && nbListGene != 0){
