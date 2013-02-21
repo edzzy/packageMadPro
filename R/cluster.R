@@ -87,7 +87,6 @@ clusterAnalyse<-function(mat,comparaison,f,pvalRaw,info,treepath=treepath,pathPN
 						file.copy(paste(resultDir,tmpGceName,sep="/"),paste(resultAnotdir,tmpGceName,sep="/"))
 						file.copy(paste(resultDir,EnameTmp,sep="/"),paste(resultAnotdir,EnameTmp,sep="/"))
 						file.copy(newFileListCluster,paste(resultAnotdir,fileCluster,sep="/"))
-						print(paste(newFileListCluster, " ",paste(resultAnotdir,fileCluster,sep="/"),sep="")) 
 
 						tex_tab2tex(paste(resultDir,tmpFdrName,sep="/"),fileNamesGominer,title=title)
 
@@ -125,8 +124,8 @@ clusterAnalyse<-function(mat,comparaison,f,pvalRaw,info,treepath=treepath,pathPN
 		coord<-0
 	}
 	
-	#	graphMmobile(filename=out_name,value=value,seuil=seuil,clust=selectCoord,ylim=ylim)
-	#	graphMmobile(filename=out_name2,value=value,seuil=seuil,clust=coord,ylim=ylim)
+		graphMmobile(filename=out_name,value=value,seuil=seuil,clust=selectCoord,ylim=ylim)
+		graphMmobile(filename=out_name2,value=value,seuil=seuil,clust=coord,ylim=ylim)
 	}
 
 	return(graphFile)
