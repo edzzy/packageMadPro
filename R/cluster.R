@@ -24,7 +24,7 @@ clusterAnalyse<-function(mat,comparaison,f,pvalRaw,info,treepath=treepath,pathPN
 			outNameList<-extractCluster(coord,info,dir=pathAnnot,pref=prefixName)
 			#Annotation
 			fileList<-paste(pathAnnot,"/",prefixName,"/list.txt",sep="")
-			resultDir<-paste(pathAnnot,prefixName,"/resultat",sep="")
+			resultDir<-paste(pathAnnot,prefixName,"/annotation",sep="")
 
 			if(file.exists(fileList)){
 				commandAnnotation<-paste("gominer -p ",filePuce," -f ",fileList, " -s ", species, " -r ", resultDir,sep="")
@@ -37,7 +37,7 @@ clusterAnalyse<-function(mat,comparaison,f,pvalRaw,info,treepath=treepath,pathPN
 				GominerF=dir(path=resultDir, pattern="^[^E|S].*_fdrse")
 	
 				for (j in 1:length(filesSfdr)){
-						pathComp<-paste(pathAnnot,"/",prefixName,sep="")
+					pathComp<-paste(pathAnnot,"/",prefixName,sep="")
 					if(nrow(read.delim(paste(resultDir,filesSfdr[j],sep="/"))) !=0){
 						rapportDir<-as.character(treepath$rapport)
 						fileNamesGominer<-paste(rapportDir,"/AnnotationCluster.tex",sep="")
@@ -60,7 +60,7 @@ clusterAnalyse<-function(mat,comparaison,f,pvalRaw,info,treepath=treepath,pathPN
 						EnameTmp<-paste(EnameTmp,"_",clust,".fdr.tsv",sep="")
 
 						gName<-paste(resultDir,GominerF,sep="/")
-						file.remove(gName)
+						file.remove(gName[j])
 
 
 						#repertoire annotation question
@@ -69,11 +69,9 @@ clusterAnalyse<-function(mat,comparaison,f,pvalRaw,info,treepath=treepath,pathPN
 						prefix<-sub("S_(.*)_\\d*\\.txt.*fdrse.txt","\\1",filesSfdr[j])
 
 
-						fileCluster<-paste(	prefix,"_",j,".txt",sep="")
-						fileListCluster<-paste(pathComp,"/",fileCluster,sep="")
 						fileCluster<-paste(	prefix,"_",clust,".txt",sep="")
 						newFileListCluster<-paste(pathComp,"/",fileCluster,sep="")
-						file.rename(fileListCluster,newFileListCluster)
+						file.rename(outNameList[j],newFileListCluster)
 
 						file.rename(paste(resultDir,filesSfdr[j],sep="/"),paste(resultDir,tmpFdrName,sep="/"))
 						file.rename(paste(resultDir,gceName[j],sep="/"),paste(resultDir,tmpGceName,sep="/"))
@@ -88,7 +86,8 @@ clusterAnalyse<-function(mat,comparaison,f,pvalRaw,info,treepath=treepath,pathPN
 						file.copy(paste(resultDir,tmpFdrName,sep="/"),paste(resultAnotdir,tmpFdrName,sep="/"))
 						file.copy(paste(resultDir,tmpGceName,sep="/"),paste(resultAnotdir,tmpGceName,sep="/"))
 						file.copy(paste(resultDir,EnameTmp,sep="/"),paste(resultAnotdir,EnameTmp,sep="/"))
-						file.copy(newFileListCluster,paste(resultAnotdir,EnameTmp,sep="/"))
+						file.copy(newFileListCluster,paste(resultAnotdir,fileCluster,sep="/"))
+						print(paste(newFileListCluster, " ",paste(resultAnotdir,fileCluster,sep="/"),sep="")) 
 
 						tex_tab2tex(paste(resultDir,tmpFdrName,sep="/"),fileNamesGominer,title=title)
 
@@ -99,8 +98,8 @@ clusterAnalyse<-function(mat,comparaison,f,pvalRaw,info,treepath=treepath,pathPN
 				}else{
 					prefix<-sub("S_(.*)(_\\d*)\\.txt.*fdrse.txt","\\1\\2",filesSfdr[j])
 					fileListCluster<-paste(pathComp,"/",prefix,"_",j,".txt",sep="")
-					newFileListCluster<-paste(pathComp,"/",prefix,"_NA_",j,".txt",sep="")
-					file.rename(fileListCluster,newFileListCluster)
+					newFileListCluster<-paste(pathComp,"/",prefix,"_NA_.txt",sep="")
+					file.rename(outNameList[j],newFileListCluster)
 
 					files2remove<-dir(path=resultDir,pattern=prefix)
 					files2remove<-paste(resultDir,files2remove,sep="/")
@@ -126,8 +125,8 @@ clusterAnalyse<-function(mat,comparaison,f,pvalRaw,info,treepath=treepath,pathPN
 		coord<-0
 	}
 	
-		graphMmobile(filename=out_name,value=value,seuil=seuil,clust=selectCoord,ylim=ylim)
-		graphMmobile(filename=out_name2,value=value,seuil=seuil,clust=coord,ylim=ylim)
+	#	graphMmobile(filename=out_name,value=value,seuil=seuil,clust=selectCoord,ylim=ylim)
+	#	graphMmobile(filename=out_name2,value=value,seuil=seuil,clust=coord,ylim=ylim)
 	}
 
 	return(graphFile)
@@ -271,7 +270,7 @@ fusionCluster<-function(begin,end){
 extractCluster<-function(coordClust,info,pref="clust",dir="./"){
 
 	fileList<-paste(dir,"/",pref,"/list.txt",sep="")
-	outNameList<-""
+	outNameList<-vector()
 	for(i in 1:nrow(coordClust)){
 		clust<-info[coordClust[i,1] : coordClust[i,2],]$GeneName
 		pathName<-paste(dir,"/",pref,sep="")
